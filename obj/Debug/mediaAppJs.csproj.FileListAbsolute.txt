@@ -1,0 +1,6 @@
+D:\Projects\mediaAppJsPlugin\mediaAppJs\bin\mediaAppJs.dll.config
+D:\Projects\mediaAppJsPlugin\mediaAppJs\bin\mediaAppJs.dll
+D:\Projects\mediaAppJsPlugin\mediaAppJs\bin\mediaAppJs.pdb
+D:\Projects\mediaAppJsPlugin\mediaAppJs\obj\Debug\mediaAppJs.csprojResolveAssemblyReference.cache
+D:\Projects\mediaAppJsPlugin\mediaAppJs\obj\Debug\mediaAppJs.dll
+D:\Projects\mediaAppJsPlugin\mediaAppJs\obj\Debug\mediaAppJs.pdb
