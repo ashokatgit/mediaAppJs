@@ -161,7 +161,7 @@
                 '<span style="color:#3a3636;font-size:12px;margin-left:5px;color:#8a8686;font-family:Tahoma, Geneva, Arial, sans-serif;font-weight:medium;">Password </span><input type="password" value=""  id="passwordtxt" />' +
                 '<input type="button" value="Login" id="mv-login" class="loginbutton" /><div id="infomessagediv" class="infoalert-box info" style="display:none" ></div>' + '<div id="errormessagediv" class="alert-box error" style="display:none"></div></div>' +
              // <input type="button" id="mv-microsoft-login" value="Login with Microsoft ID" class="loginbutton" /><br /><input type="button" id="mv-AdToken-login" value="Call api with Code" />
-            '<div style="left: 50%; margin-left: 20px;  color: rgb(15, 209, 243); font-size: 13px;margin-top: 5px;margin-left:30px;" class="learn-more"><a style="color:#2bb4f9;" href="#" target="_blank" ></a></div>'
+            '<br/><br/><div style="left: 50%; margin-left: 20px;  color: rgb(15, 209, 243); font-size: 13px;margin-top: 5px;margin-left:30px;" class="learn-more"><a style="color:#2bb4f9;" href="#" target="_blank" ></a></div>'
             + '<div name="microsoft-login-box" id="mv-microsoft-login" class="mdiv-box"><img src="images/Microsoft_Logo.png" height="55px" width="55px" /> <span >Work Account</span></div> </div>';
             return ui;
         },
@@ -5636,14 +5636,15 @@
         });
     }
 };
-})();
+    })();
+
 /**
 *All Events Functions End here
 */
 $.fn.LoginUI = function (options) {
     try {
         console.log('hi2before login page');
-        console.log(window.location.href);
+       // console.log(window.location.href);
         containerid = $(this).selector;
         $('#errormessagediv').css('display', 'none');
         $('#infomessagediv').css('display', 'none');
@@ -5692,20 +5693,33 @@ $.fn.LoginUI = function (options) {
                         if (defaultsettings.firstpage == 'home') {
                             Events.CreateLibraryEvent(settings);
                         } else if (defaultsettings.firstpage == 'login') {
+                            debugger;
                             var html = TemplateModel.LoginOfficeTemplate(settings);
                             $(containerid).html(html);
                             Events.BindLoginEvent(settings);
+                          
                             $('#errormessagediv').css('display', 'none');
                             $('#infomessagediv').css('display', 'none');
                             $('#errormessagediv').html('');
+                           
                             //set error value to errormessagediv if aderror occurred
                             if (windowsurl.indexOf('?aderror') != -1) {
-                                $('#errormessagediv').css('display', 'block');
-                                $('#errormessagediv').html('No consent granted by Active Directory Administrator');
-                                //window.location.href = windowsurl.split('?aderror')[0];
-                                window.history.push(windowsurl.split('?aderror')[0]);
-                                return false;
-                            }
+                                setTimeout(function () { 
+                                var now = new Date();
+                               var time = now.getTime();
+                                var expireTime = time + 3000 * 36000;
+                                now.setTime(expireTime);                             
+                               document.cookie = 'aderror=true;expires=' + now.toGMTString() + ';path=/';
+                             
+                               var urllink = windowsurl.split('?aderror')[0];
+
+                               window.location.href = urllink;//+ '?adfail=0'
+                            
+                               return true;
+                                }, 2);
+                                }
+
+                          
                             Events.OfficeSignUpEvent(settings);
                         } else if (defaultsettings.firstpage == 'signup') {
                             //Sign Up Start Here
@@ -5852,6 +5866,10 @@ $.fn.LoginUI = function (options) {
         $('#errormessagediv').html(e.message);
     }
 }
+
+
+
+
 /**Function SearchUI 
 *@param options will contain all default values
 */
